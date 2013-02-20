@@ -41,11 +41,11 @@ class DummiesController extends AppController {
 		$html = & new HtmlHelper($this->View);
 		$baseurl = 'http://'.$_SERVER['HTTP_HOST'];
 
-		$okurl = $baseurl.$html->url('/dummies/ok/');
-		$failurl = $baseurl.$html->url('/dummies/fail/');
+		$okurl = $baseurl.$html->url('/sisow_ideal/dummies/success/');
+		$failurl = $baseurl.$html->url('/sisow_ideal/dummies/fail/');
 
 		//Random number for identifying. Could also be an invoicenumber
-		$invoicenumber = rand(100,999);
+		$invoicenumber = rand(10000,99999);
 
 		//Set the purchase id. This will be returned in the GET params after it completed or failed.
 		$this->Sisow->purchaseId = $invoicenumber;
@@ -69,15 +69,34 @@ class DummiesController extends AppController {
 		$this->Sisow->callbackUrl = $failurl; 
 
 		//Initialize transaction request and catch + display errors
-		if ( ($ex = $this->Sisow->TransactionRequest($eigenschappen) ) < 0) {
+		if ( ($ex = $this->Sisow->TransactionRequest() ) < 0) {
 			$this->Session->setFlash('Error initializing payment, errorcode '.$ex.' please contact the websites administrator. ('.$this->Sisow->errorMessage.')');
 			$this->redirect($this->referer());
 		}
 
-		die('Hoi');
-
 		//No error given? Redirect to the Url provided by Sisow:
 		$this->redirect($this->Sisow->issuerUrl);
 		exit; //Just to make sure :)
+	}
+
+
+	/**
+	 *	Function that is called when transaction was succesfull
+	 */
+	function success(){	
+
+		//There are different ways of ensuring the user calling this function was actualy the one that payed. See the Sisow documentation for that!
+		die('Payment successfull, do smart stuff here.');
+
+	}
+
+	/**
+	 *	Function that is called when transaction failed
+	 */
+	function fail(){	
+
+		//There are different ways of ensuring the user calling this function was actualy the one that payed. See the Sisow documentation for that!
+		die('Payment failed, do smart stuff here.');
+
 	}
 }

@@ -35,4 +35,4 @@ You must place the SisowIdeal CakePHP plugin within your CakePHP 2.x app/Plugin 
 
 # Usage
 
-You can use get the component like this:
+Example controller and view is included!
