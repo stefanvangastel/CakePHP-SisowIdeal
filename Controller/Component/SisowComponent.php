@@ -286,4 +286,8 @@ class SisowComponent extends Component {
 		$this->entranceCode = $this->parse("entrancecode");
 		return 0;
 	}
+
+	public function validateSha1( $shaToTest = '', $trxId = '', $entranceCode ='' , $status = '' ) {
+		return ( sha1( $trxId . $entranceCode . $status . $this->merchantId . $this->merchantKey ) == $shaToTest );
+	}
 }
