@@ -59,7 +59,7 @@ class SisowComponent extends Component {
 	const statusOpen = "Open";
 
 	
-	public function __construct($merchantid, $merchantkey) {
+	public function __construct() {
 		
 		//Load the ini file
 		$inifile = APP.'Config'.DS.'sisow.ini';
