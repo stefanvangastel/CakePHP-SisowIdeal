@@ -287,4 +287,3 @@ class SisowComponent extends Component {
 		return 0;
 	}
 }
-?>
