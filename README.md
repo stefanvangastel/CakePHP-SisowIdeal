@@ -28,11 +28,15 @@ You must place the SisowIdeal CakePHP plugin within your CakePHP 2.x app/Plugin 
 	public $components = array(
 		'Session',
 		'RequestHandler',
-		'SisowIdeal.Sisow', // <- This is the line which will trigger the magic
+		'SisowIdeal.Sisow', // <- This is the line that will trigger the magic
 		'DebugKit.Toolbar'
 	);
 
+(4) Create a config ini file in app/Config/ called sisow.ini (example ini file in root of this plugin). The file should contain the following 2 lines:
+
+	merchantId = 'thisshouldbeid'
+	merchantKey = 'thisshouldbethekey'
 
 # Usage
 
-Example controller and view is included!
+Example controller and view are included!
