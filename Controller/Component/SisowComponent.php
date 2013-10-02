@@ -59,14 +59,17 @@ class SisowComponent extends Component {
 	const statusOpen = "Open";
 
 	
-	public function __construct($merchantid, $merchantkey) {
+	public function __construct() {
 		
 		//Load the ini file
 		$inifile = APP.'Config'.DS.'sisow.ini';
 
 		//Check file existance
 		if ( ! file_exists($inifile) ){
-			throw new InternalErrorException('sisow.ini config file in app/Config not found.');
+			$inifile .= '.php';
+			if( ! file_exists($inifile) ){
+				throw new InternalErrorException('sisow.ini.php config file in app/Config not found.');
+			}
 		}
 
 		//Read the info
@@ -74,7 +77,7 @@ class SisowComponent extends Component {
 		
 		//Check for data
 		if( empty($merchantinfo['merchantId']) OR empty($merchantinfo['merchantKey']) ){
-			throw new InternalErrorException('sisow.ini config file not containing values for merchantId or merchantKey. (Case sensitive!).');
+			throw new InternalErrorException('sisow.ini.php config file not containing values for merchantId or merchantKey. (Case sensitive!).');
 		}
 
 		$this->merchantId  = $merchantinfo['merchantId'];
@@ -286,5 +289,8 @@ class SisowComponent extends Component {
 		$this->entranceCode = $this->parse("entrancecode");
 		return 0;
 	}
+
+	public function validateSha1( $shaToTest = '', $trxId = '', $entranceCode ='' , $status = '' ) {
+		return ( sha1( $trxId . $entranceCode . $status . $this->merchantId . $this->merchantKey ) == $shaToTest );
+	}
 }
-?>
